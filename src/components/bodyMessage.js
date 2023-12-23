@@ -91,7 +91,7 @@ const BodyMessage = () => {
         {error && (
           <Alert variant="danger" style={alertStyles} dismissible>
             You are unable to search new quote!!! Check your internet connection
-            and try again
+            and try again next time
           </Alert>
         )}
 
