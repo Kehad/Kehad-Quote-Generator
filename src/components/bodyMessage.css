@@ -1,0 +1,77 @@
+body {
+  /* background-color: red; */
+  font-size: 24px;
+  font-weight: 400;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#quote-box {
+  background-color: #fff;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 30rem;
+  height: min-content;
+
+  border-radius: 10px;
+}
+#quote-text {
+  text-align: center;
+}
+#author-remark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#author-link {
+  display: flex;
+  gap: 0.5rem;
+}
+#author-t,
+#author-x {
+  /* background-color: green; */
+  border-radius: 10px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+#author-t svg,
+#author-x svg {
+  height: 20px;
+}
+#author-t:hover,
+#author-x:hover {
+  transform: translateY(-2px);
+}
+#author {
+  display: flex;
+  justify-content: right;
+}
+#new-quote {
+  background-color: green;
+  border-radius: 10px;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid green;
+}
+#new-quote:hover,
+#new-quote:active {
+  background-color: #fff;
+  color: green;
+  border: 1px solid green;
+}
+
+sup {
+  font-size: 2rem;
+}
