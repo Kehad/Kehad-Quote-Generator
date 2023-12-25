@@ -29,8 +29,8 @@ body {
   display: flex;
   gap: 0.5rem;
 }
-#author-t,
-#author-x {
+#tweet-quote,
+#whatsapp-quote {
   /* background-color: green; */
   border-radius: 10px;
   padding: 0.5rem;
@@ -42,17 +42,22 @@ body {
   border: none;
   cursor: pointer;
 }
-#author-t svg,
-#author-x svg {
+#tweet-quote svg,
+#whatsapp-quote svg {
   height: 20px;
 }
-#author-t:hover,
-#author-x:hover {
+#tweet-quote:hover,
+#whatsapp-quote:hover {
   transform: translateY(-2px);
 }
 #author {
   display: flex;
   justify-content: right;
+  font-size: 16px;
+  font-style: italic;
+}
+#author span {
+  font-size: 24px;
 }
 #new-quote {
   background-color: green;
@@ -62,7 +67,7 @@ body {
   border: none;
   font-size: 20px;
   color: #fff;
-  cursor: pointer;
+  cursor: pointer !important;
   border: 1px solid green;
 }
 #new-quote:hover,
@@ -71,7 +76,13 @@ body {
   color: green;
   border: 1px solid green;
 }
-
-sup {
-  font-size: 2rem;
+span {
+  font-size: 3rem;
+}
+#profile {
+  text-decoration: none;
+  color: #fff;
+  font-style: oblique;
+  font-size: 16px;
+  cursor: pointer;
 }

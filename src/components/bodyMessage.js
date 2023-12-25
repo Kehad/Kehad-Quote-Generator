@@ -20,22 +20,24 @@ const BodyMessage = () => {
     color: '#fff',
     borderColor: numColor,
     backgroundColor: numColor,
+    cursor: 'pointer',
   };
 
   const fetchQuote = async () => {
     try {
       const response = await fetch('https://api.quotable.io/random');
       const data = await response.json();
-      // setQuoteObject(data);
+      setQuoteObject(data);
       if (data.statusCode === 404) {
         setError(true);
       } else {
         setError(false);
       }
+      // setError(false);
     } catch (error) {
       console.error('Error fetching quote:', error.message);
       if (error) {
-        // setError((error) => !error);
+        setError(true);
       }
     }
   };
@@ -90,14 +92,14 @@ const BodyMessage = () => {
       <Layout bkgColor={numColor}>
         {error && (
           <Alert variant="danger" style={alertStyles} dismissible>
-            You are unable to search new quote!!! Check your internet connection
-            and try again next time
+            You're unable to get a new quote! Check your internet connection and
+            try again
           </Alert>
         )}
 
         <div id="quote-box" className="header">
           <p id="quote-text">
-            <sup>"</sup>
+            <span>"</span>
             {quoteObject.content}
             {/* <AutoType name={quoteObject.content} /> */}
           </p>
@@ -107,9 +109,10 @@ const BodyMessage = () => {
             <div id="author-link">
               <a
                 href={`https://twitter.com/intent/tweet?url=&text=${quoteObject.content}`}
-                id="author-x"
+                id="tweet-quote"
                 onClick={tweetPost}
                 style={newColor}
+                title="Tweet this quote!"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -123,19 +126,12 @@ const BodyMessage = () => {
                   <path d="M 2.3671875 3 L 9.4628906 13.140625 L 2.7402344 21 L 5.3808594 21 L 10.644531 14.830078 L 14.960938 21 L 21.871094 21 L 14.449219 10.375 L 20.740234 3 L 18.140625 3 L 13.271484 8.6875 L 9.2988281 3 L 2.3671875 3 z M 6.2070312 5 L 8.2558594 5 L 18.033203 19 L 16.001953 19 L 6.2070312 5 z"></path>
                 </svg>
               </a>
-              {/* <button id="author-x" onClick={tweetPost}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+              <a
+                href="#"
+                id="whatsapp-quote"
+                style={newColor}
+                title="Update your whatsapp status"
               >
-                <path d="M 2.3671875 3 L 9.4628906 13.140625 L 2.7402344 21 L 5.3808594 21 L 10.644531 14.830078 L 14.960938 21 L 21.871094 21 L 14.449219 10.375 L 20.740234 3 L 18.140625 3 L 13.271484 8.6875 L 9.2988281 3 L 2.3671875 3 z M 6.2070312 5 L 8.2558594 5 L 18.033203 19 L 16.001953 19 L 6.2070312 5 z"></path>
-              </svg>
-            </button> */}
-              <a href="#" id="author-t" style={newColor}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
@@ -161,6 +157,17 @@ const BodyMessage = () => {
             </button>
             {/* <button id="tweet-quote"></button>/ */}
           </div>
+        </div>
+        <div>
+          {' '}
+          by{' '}
+          <a
+            id="profile"
+            href="https://www.linkedin.com/in/kehinde-adigun-/"
+            target="_blank"
+          >
+            @Kehad
+          </a>
         </div>
       </Layout>
     </>

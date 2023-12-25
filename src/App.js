@@ -4,7 +4,6 @@ function App() {
   return (
     <div className="App">
       <BodyMessage />
-      {/* dds */}hh
     </div>
   );
 }
