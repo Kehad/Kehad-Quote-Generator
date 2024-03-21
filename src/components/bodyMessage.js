@@ -32,21 +32,6 @@ const BodyMessage = () => {
     // },
   };
 
-  const alertStyles2 = {
-    position: 'absolute',
-    top: '5%',
-    right: '5%',
-    fontSize: '16px',
-    color: '#fff',
-  };
-
-  const alertHoverStyles = {
-    // Define the styles for the hover state
-    // For example, changing background color on hover
-    backgroundColor: 'lightgray',
-    cursor: 'pointer', // Optional: Change cursor to indicate interactivity
-  };
-
   const newColorHover = {
     // Define the styles for the hover state
     // For example, changing background color on hover
@@ -237,15 +222,6 @@ const BodyMessage = () => {
             </button>
             {/* <button id="tweet-quote"></button>/ */}
           </div>
-        </div>
-        <div
-          style={
-            isHovered ? { ...alertStyles2, ...alertHoverStyles } : alertStyles2
-          }
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          Your alert content goes here.
         </div>
 
         <div>
