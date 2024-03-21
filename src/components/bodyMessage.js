@@ -4,12 +4,16 @@ import AutoType from './autoType';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './bodyMessage.css';
-import matchers from '@testing-library/jest-dom/matchers';
+// import matchers from '@testing-library/jest-dom/matchers';
+// import { hover } from '@testing-library/user-event/dist/hover';
 
+// console.log(matchers, hover);
 const BodyMessage = () => {
   const [quoteObject, setQuoteObject] = useState('');
-  const [error, setError] = useState(false);
+  const [errorState, setErrorState] = useState(false);
   const [numColor, setNumColor] = useState();
+  const [isHovered, setIsHovered] = useState(false);
+
   const alertStyles = {
     position: 'absolute',
     top: '5%',
@@ -20,7 +24,36 @@ const BodyMessage = () => {
     color: '#fff',
     borderColor: numColor,
     backgroundColor: numColor,
+    // borderColor: numColor,
+    // backgroundColor: numColor,
     cursor: 'pointer',
+    // ':hover': {
+
+    // },
+  };
+
+  const alertStyles2 = {
+    position: 'absolute',
+    top: '5%',
+    right: '5%',
+    fontSize: '16px',
+    color: '#fff',
+  };
+
+  const alertHoverStyles = {
+    // Define the styles for the hover state
+    // For example, changing background color on hover
+    backgroundColor: 'lightgray',
+    cursor: 'pointer', // Optional: Change cursor to indicate interactivity
+  };
+
+  const newColorHover = {
+    // Define the styles for the hover state
+    // For example, changing background color on hover
+    // backgroundColor: '#fff',
+    borderColor: numColor,
+    backgroundColor: '#fff',
+    color: numColor,
   };
 
   const fetchQuote = async () => {
@@ -28,24 +61,39 @@ const BodyMessage = () => {
       const response = await fetch('https://api.quotable.io/random');
       const data = await response.json();
       setQuoteObject(data);
-      if (data.statusCode === 404) {
-        setError(true);
-      } else {
-        setError(false);
-      }
+      // console.log('data', data);
+      // if (data.statusCode === 404) {
+      // setError(true);
+      // } else {
       // setError(false);
+      // }
+      setErrorState(false);
     } catch (error) {
-      console.error('Error fetching quote:', error.message);
+      console.log(errorState);
+      setErrorState(true);
+      console.log(errorState);
+
+      // console.error('Error fetching quote:', error.message);
+      console.log('error');
+      // throw new Error(`Error, ${error.message}`);
       if (error) {
-        setError(true);
       }
     }
   };
+  // posting to twitter function
   const tweetPost = () => {
-    var tweetText = 'Hello, this is a pre-filled tweet!';
+    var tweetText = quoteObject.content;
     var encodedTweetText = encodeURIComponent(tweetText);
     var twitterURL = `https://twitter.com/intent/tweet?url=&text=${encodedTweetText}`;
     window.location.href = twitterURL;
+  };
+  // posting to whatsapp function
+  const handleStatusUpdate = () => {
+    const statusMessage = quoteObject.content;
+    const whatsappLink = `whatsapp://send?text=${encodeURIComponent(
+      statusMessage
+    )}`;
+    window.location.href = whatsappLink;
   };
   // const colorGenerator = () => {
   //   const rnd = Math.round(Math.random() * 999).toString();
@@ -73,24 +121,47 @@ const BodyMessage = () => {
     let color = '#';
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
-      console.log(color);
+      // console.log(color);
     }
     return color;
   }
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    console.log('hovering');
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    console.log('finish hover');
+  };
+  // const boxStyle = {
+  //   // backgroundColor: isHovered ? 'blue' : 'red',
+  //   color: 'white',
+  //   backgroundColor: '#fff',
+  //   color: 'green',
+  //   // border: 1px solid green;
+  // };
+  // Pseudo-class for hover
+  // ':hover': {
+  //   backgroundColor: 'green',
+  // },
+
   const handleButtonClick = () => {
     setNumColor(generateRandomColor());
   };
+  setTimeout(() => {
+    if (errorState === true) setErrorState(false);
+  }, 800);
 
   useEffect(() => {
     fetchQuote();
     handleButtonClick();
   }, []);
-  console.log(quoteObject.content);
+  // console.log(quoteObject.content);
   return (
     <>
       <Layout bkgColor={numColor}>
-        {error && (
+        {errorState && (
           <Alert variant="danger" style={alertStyles} dismissible>
             You're unable to get a new quote! Check your internet connection and
             try again
@@ -103,6 +174,7 @@ const BodyMessage = () => {
             {quoteObject.content}
             {/* <AutoType name={quoteObject.content} /> */}
           </p>
+          {/* {error && alert('ddsuccdccd')} */}
           <h3 id="author">~~ {quoteObject.author}</h3>
 
           <div id="author-remark">
@@ -127,10 +199,13 @@ const BodyMessage = () => {
                 </svg>
               </a>
               <a
-                href="#"
+                href={`whatsapp://send?text=${encodeURIComponent(
+                  quoteObject.content
+                )}`}
                 id="whatsapp-quote"
                 style={newColor}
-                title="Update your whatsapp status"
+                title="Share to your Whatsapp"
+                onClick={handleStatusUpdate}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -147,17 +222,32 @@ const BodyMessage = () => {
             </div>
             <button
               id="new-quote"
-              style={newColor}
+              // style={newColor}
+              style={isHovered ? { ...newColor, ...newColorHover } : newColor}
               onClick={() => {
                 fetchQuote();
                 handleButtonClick();
               }}
+              // onMouseEnter={handleMouseEnter}
+              // onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               New quote
             </button>
             {/* <button id="tweet-quote"></button>/ */}
           </div>
         </div>
+        <div
+          style={
+            isHovered ? { ...alertStyles2, ...alertHoverStyles } : alertStyles2
+          }
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          Your alert content goes here.
+        </div>
+
         <div>
           {' '}
           by{' '}
@@ -174,3 +264,29 @@ const BodyMessage = () => {
   );
 };
 export default BodyMessage;
+
+// const PseudoClassExample = ({ children }) => {
+//   const styles = {
+//     base: {
+//       padding: '10px',
+//       backgroundColor: 'blue',
+//       color: 'white',
+//       border: 'none',
+//       cursor: 'pointer',
+//     },
+//     hover: {
+//       backgroundColor: 'green',
+//     },
+//   };
+
+//   return (
+//     <button
+//       style={{
+//         ...styles.base,
+//         ...styles.hover /* You can conditionally apply hover styles here */,
+//       }}
+//     >
+//       {children}
+//     </button>
+//   );
+// };
