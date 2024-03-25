@@ -83,6 +83,11 @@ span {
   text-decoration: none;
   color: #fff;
   font-style: oblique;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
+}
+
+.contact:hover {
+  transform: translateY(-3px);
+  transition: all 0.5s;
 }

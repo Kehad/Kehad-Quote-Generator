@@ -145,7 +145,7 @@ const BodyMessage = () => {
   // console.log(quoteObject.content);
   return (
     <>
-      <Layout bkgColor={numColor}>
+      <Layout bkgColor={numColor} onClick={() => handleMouseLeave()}>
         {errorState && (
           <Alert variant="danger" style={alertStyles} dismissible>
             You're unable to get a new quote! Check your internet connection and
@@ -224,7 +224,7 @@ const BodyMessage = () => {
           </div>
         </div>
 
-        <div>
+        <div className="contact">
           {' '}
           by{' '}
           <a
