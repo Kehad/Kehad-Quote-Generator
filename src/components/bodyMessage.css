@@ -13,7 +13,9 @@ body {
   flex-direction: column;
 
   width: 30rem;
+  /* width: min-content; */
   height: min-content;
+  /* height: 35rem; */
 
   border-radius: 10px;
 }
@@ -90,4 +92,42 @@ span {
 .contact:hover {
   transform: translateY(-3px);
   transition: all 0.5s;
+}
+
+@media screen and (max-width: 900px) {
+  #quote-box {
+    background-color: #fff;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 25rem;
+    /* height: min-content; */
+
+    border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #quote-box {
+    padding: 1.3rem;
+
+    width: 20rem;
+  }
+  #quote-text {
+    font-size: 20px;
+  }
+  span {
+    font-size: 2rem;
+  }
+  #profile {
+    font-size: 16px;
+  }
+  #new-quote {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 400px) {
 }
