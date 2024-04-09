@@ -156,11 +156,8 @@ const BodyMessage = () => {
         <div id="quote-box" className="header">
           <p id="quote-text">
             <span>"</span>
-            {/* {quoteObject.content} */}
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium
-            ipsam nesciunt porro, soluta doloribus incidunt, illum architecto
-            quia non aut repellendus, aperiam dolores! Soluta autem aspernatur,
-            vero maxime veritatis sint!
+            {quoteObject.content}
+
             {/* <AutoType name={quoteObject.content} /> */}
           </p>
           {/* {error && alert('ddsuccdccd')} */}
