@@ -1,0 +1,133 @@
+body {
+  /* background-color: red; */
+  font-size: 27px;
+  font-weight: 400;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#quote-box {
+  background-color: #fff;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 35rem;
+  /* width: min-content; */
+  height: min-content;
+  /* height: 35rem; */
+
+  border-radius: 10px;
+}
+#quote-text {
+  text-align: center;
+}
+#author-remark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#author-link {
+  display: flex;
+  gap: 0.5rem;
+}
+#tweet-quote,
+#whatsapp-quote {
+  /* background-color: green; */
+  border-radius: 10px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+#tweet-quote svg,
+#whatsapp-quote svg {
+  height: 20px;
+}
+#tweet-quote:hover,
+#whatsapp-quote:hover {
+  transform: translateY(-2px);
+}
+#author {
+  display: flex;
+  justify-content: right;
+  font-size: 16px;
+  font-style: italic;
+}
+#author span {
+  font-size: 24px;
+}
+#new-quote {
+  /* background-color: green; */
+  border-radius: 10px;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer !important;
+  border: 1px solid;
+}
+#new-quote:hover,
+#new-quote:active {
+  /* background-color: #fff; */
+  /* color: green; */
+  /* border: 1px solid green; */
+}
+span {
+  font-size: 3rem;
+}
+#profile {
+  text-decoration: none;
+  color: #fff;
+  font-style: oblique;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.contact:hover {
+  transform: translateY(-3px);
+  transition: all 0.5s;
+}
+
+@media screen and (max-width: 900px) {
+  #quote-box {
+    background-color: #fff;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 25rem;
+    /* height: min-content; */
+
+    border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #quote-box {
+    padding: 1.3rem;
+
+    width: 20rem;
+  }
+  #quote-text {
+    font-size: 20px;
+  }
+  span {
+    font-size: 2rem;
+  }
+  #profile {
+    font-size: 16px;
+  }
+  #new-quote {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+}
