@@ -19,6 +19,17 @@ body {
 
   border-radius: 10px;
 }
+.copy-box {
+  display: flex;
+  justify-content: right;
+}
+.copy {
+  height: 18px;
+  width: min-content;
+  display: inline-block;
+  width: fit-content;
+  cursor: pointer;
+}
 #quote-text {
   text-align: center;
 }

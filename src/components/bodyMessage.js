@@ -1,45 +1,54 @@
-import { useEffect, useState } from 'react';
-import Layout from '../layout/layout';
-import AutoType from './autoType';
-import Alert from 'react-bootstrap/Alert';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './bodyMessage.css';
+import { useEffect, useState } from "react";
+import Layout from "../layout/layout";
+import AutoType from "./autoType";
+import Alert from "react-bootstrap/Alert";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./bodyMessage.css";
 
 const BodyMessage = () => {
-  const [quoteObject, setQuoteObject] = useState('');
+  const [quoteObject, setQuoteObject] = useState("");
   const [errorState, setErrorState] = useState(false);
   const [numColor, setNumColor] = useState();
   const [isHovered, setIsHovered] = useState(false);
+  const [copySuccess, setCopySuccess] = useState("");
 
   const alertStyles = {
-    position: 'absolute',
-    top: '5%',
-    right: '5%',
-    fontSize: '16px',
+    position: "absolute",
+    top: "5%",
+    right: "5%",
+    fontSize: "16px",
   };
   const newColor = {
-    color: '#fff',
+    color: "#fff",
     borderColor: numColor,
     backgroundColor: numColor,
-    cursor: 'pointer',
-
+    cursor: "pointer",
   };
-
   const newColorHover = {
     // Define the styles for the hover state
     borderColor: numColor,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     color: numColor,
   };
 
   const fetchQuote = async () => {
     try {
-      const response = await fetch('https://api.quotable.io/random');
+      const response = await fetch("https://api.quotable.io/random");
       const data = await response.json();
       setQuoteObject(data);
       setErrorState(false);
     } catch (error) {
       setErrorState(true);
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      const copying = `${quoteObject.content} ~~ ${quoteObject.author}`
+      await navigator.clipboard.writeText(copying);
+      setCopySuccess(true);
+    } catch (err) {
+      setCopySuccess(false);
     }
   };
   // posting to twitter function
@@ -58,10 +67,9 @@ const BodyMessage = () => {
     window.location.href = whatsappLink;
   };
 
-
   function generateRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
+    const letters = "0123456789ABCDEF";
+    let color = "#";
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
       // console.log(color);
@@ -75,13 +83,12 @@ const BodyMessage = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-
-
   const handleButtonClick = () => {
     setNumColor(generateRandomColor());
   };
   setTimeout(() => {
     if (errorState === true) setErrorState(false);
+    if (errorState === true ) setCopySuccess(false);
   }, 800);
 
   useEffect(() => {
@@ -99,7 +106,25 @@ const BodyMessage = () => {
           </Alert>
         )}
 
+        {copySuccess && (
+          <Alert variant={errorState ? "success" : "danger"} style={alertStyles} dismissible>
+            {errorState ? 'Copied' : 'Failed to copy'}
+          </Alert>
+        )}
+
         <div id="quote-box" className="header">
+          <div className="copy-box" title="Copy text" onClick={copyToClipboard}>
+            <a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+                className="copy"
+                fill={numColor}
+              >
+                <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z" />
+              </svg>
+            </a>
+          </div>
           <p id="quote-text">
             <span>"</span>
             {quoteObject.content}
@@ -172,8 +197,8 @@ const BodyMessage = () => {
         </div>
 
         <div className="contact">
-          {' '}
-          by{' '}
+          {" "}
+          by{" "}
           <a
             id="profile"
             href="https://www.linkedin.com/in/kehinde-adigun-/"
