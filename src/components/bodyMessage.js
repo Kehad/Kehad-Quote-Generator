@@ -4,10 +4,7 @@ import AutoType from './autoType';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './bodyMessage.css';
-// import matchers from '@testing-library/jest-dom/matchers';
-// import { hover } from '@testing-library/user-event/dist/hover';
 
-// console.log(matchers, hover);
 const BodyMessage = () => {
   const [quoteObject, setQuoteObject] = useState('');
   const [errorState, setErrorState] = useState(false);
