@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../layout/layout";
-import AutoType from "./autoType";
+// import AutoType from "./autoType";
 import Alert from "react-bootstrap/Alert";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./bodyMessage.css";
@@ -10,7 +10,7 @@ const BodyMessage = () => {
   const [errorState, setErrorState] = useState(false);
   const [numColor, setNumColor] = useState();
   const [isHovered, setIsHovered] = useState(false);
-  const [copySuccess, setCopySuccess] = useState("");
+  const [copySuccess, setCopySuccess] = useState(null);
 
   const alertStyles = {
     position: "absolute",
@@ -42,15 +42,7 @@ const BodyMessage = () => {
     }
   };
 
-  const copyToClipboard = async () => {
-    try {
-      const copying = `${quoteObject.content} ~~ ${quoteObject.author}`
-      await navigator.clipboard.writeText(copying);
-      setCopySuccess(true);
-    } catch (err) {
-      setCopySuccess(false);
-    }
-  };
+  
   // posting to twitter function
   const tweetPost = () => {
     var tweetText = quoteObject.content;
@@ -77,9 +69,9 @@ const BodyMessage = () => {
     return color;
   }
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+  // const handleMouseEnter = () => {
+  //   setIsHovered(true);
+  // };
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
@@ -88,14 +80,39 @@ const BodyMessage = () => {
   };
   setTimeout(() => {
     if (errorState === true) setErrorState(false);
-    if (errorState === true ) setCopySuccess(false);
   }, 800);
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setCopySuccess(null);
+      console.log('setCopySuccess null')
+    }, 800)
+  },[copySuccess])
 
   useEffect(() => {
     fetchQuote();
     handleButtonClick();
   }, []);
-  // console.log(quoteObject.content);
+
+   const copyToClipboard = async () => {
+     try {
+       if (quoteObject) {
+         console.log('to copy ')
+         setCopySuccess(false);
+       } else {
+         console.log("don't copy");
+       setCopySuccess(true);
+         return;
+       }
+       const copying = `"${quoteObject.content}" ~~ ${quoteObject.author}`;
+       await navigator.clipboard.writeText(copying);
+      //  setCopySuccess(true);
+     } catch (err) {
+      //  setCopySuccess(false);
+     }
+   };
+
   return (
     <>
       <Layout bkgColor={numColor} onClick={() => handleMouseLeave()}>
@@ -106,9 +123,14 @@ const BodyMessage = () => {
           </Alert>
         )}
 
-        {copySuccess && (
-          <Alert variant={errorState ? "success" : "danger"} style={alertStyles} dismissible>
-            {errorState ? 'Copied' : 'Failed to copy'}
+        {copySuccess === true && (
+          <Alert variant="danger" style={alertStyles} dismissible>
+            Failed to copy
+          </Alert>
+        )}
+        {copySuccess === false && (
+          <Alert variant="success" style={alertStyles} dismissible>
+            "Copied"
           </Alert>
         )}
 
@@ -128,8 +150,6 @@ const BodyMessage = () => {
           <p id="quote-text">
             <span>"</span>
             {quoteObject.content}
-
-            {/* <AutoType name={quoteObject.content} /> */}
           </p>
           {/* {error && alert('ddsuccdccd')} */}
           <h3 id="author">~~ {quoteObject.author}</h3>
@@ -203,6 +223,7 @@ const BodyMessage = () => {
             id="profile"
             href="https://www.linkedin.com/in/kehinde-adigun-/"
             target="_blank"
+            rel="noreferrer"
           >
             @Kehad
           </a>
