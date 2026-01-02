@@ -33,8 +33,11 @@ const BodyMessage = () => {
 
   const fetchQuote = async () => {
     try {
-      const response = await fetch("https://api.quotable.io/quotes/random");
+      // const response = await fetch("https://api.quotable.io/quotes/random");
+      const response = await fetch("https://dummyjson.com/quotes/random");
+      console.log(response);
       const data = await response.json();
+      console.log(data);
       setQuoteObject(data);
       setErrorState(false);
     } catch (error) {
@@ -45,14 +48,14 @@ const BodyMessage = () => {
   
   // posting to twitter function
   const tweetPost = () => {
-    var tweetText = quoteObject.content;
+    var tweetText = quoteObject.quote;
     var encodedTweetText = encodeURIComponent(tweetText);
     var twitterURL = `https://twitter.com/intent/tweet?url=&text=${encodedTweetText}`;
     window.location.href = twitterURL;
   };
   // posting to whatsapp function
   const handleStatusUpdate = () => {
-    const statusMessage = quoteObject.content;
+    const statusMessage = quoteObject.quote;
     const whatsappLink = `whatsapp://send?text=${encodeURIComponent(
       statusMessage
     )}`;
@@ -105,7 +108,7 @@ const BodyMessage = () => {
        setCopySuccess(true);
          return;
        }
-       const copying = `"${quoteObject.content}" ~~ ${quoteObject.author}`;
+       const copying = `"${quoteObject.quote}" ~~ ${quoteObject.author}`;
        await navigator.clipboard.writeText(copying);
       //  setCopySuccess(true);
      } catch (err) {
@@ -149,7 +152,7 @@ const BodyMessage = () => {
           </div>
           <p id="quote-text">
             <span>"</span>
-            {quoteObject.content}
+            {quoteObject.quote}
           </p>
           {/* {error && alert('ddsuccdccd')} */}
           <h3 id="author">~~ {quoteObject.author}</h3>
@@ -157,7 +160,7 @@ const BodyMessage = () => {
           <div id="author-remark">
             <div id="author-link">
               <a
-                href={`https://twitter.com/intent/tweet?url=&text=${quoteObject.content}`}
+                href={`https://twitter.com/intent/tweet?url=&text=${quoteObject.quote}`}
                 id="tweet-quote"
                 onClick={tweetPost}
                 style={newColor}
@@ -177,7 +180,7 @@ const BodyMessage = () => {
               </a>
               <a
                 href={`whatsapp://send?text=${encodeURIComponent(
-                  quoteObject.content
+                  quoteObject.quote
                 )}`}
                 id="whatsapp-quote"
                 style={newColor}
