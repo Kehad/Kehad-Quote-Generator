@@ -35,6 +35,7 @@ const BodyMessage = () => {
 
   const fetchQuote = async () => {
     setIsLoading(true);
+    setNumColor(generateRandomColor());
     try {
       // const response = await fetch("https://api.quotable.io/quotes/random");
       const response = await fetch("https://dummyjson.com/quotes/random");
@@ -98,7 +99,6 @@ const BodyMessage = () => {
 
   useEffect(() => {
     fetchQuote();
-    handleButtonClick();
   }, []);
 
   const copyToClipboard = async () => {
