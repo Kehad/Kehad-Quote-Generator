@@ -1,5 +1,3 @@
-import './layout.css';
-
 const Layout = (props) => {
   const { bkgColor } = props;
   const layoutStyle = {
@@ -7,7 +5,10 @@ const Layout = (props) => {
     color: bkgColor,
   };
   return (
-    <div className="layout" style={layoutStyle}>
+    <div
+      className="hidden fixed inset-0 flex items-center justify-center flex-col"
+      style={layoutStyle}
+    >
       {props.children}
     </div>
   );

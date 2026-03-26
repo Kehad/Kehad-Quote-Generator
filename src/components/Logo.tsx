@@ -1,10 +1,8 @@
-import "./Logo.css";
-
 const Logo = () => {
   return (
-    <div className="logo-container">
+    <div className="flex justify-center mb-6 animate-[fadeInScale_0.6s_ease-out]">
       <svg
-        className="logo"
+        className="h-20 w-20 filter drop-shadow-[0_4px_12px_rgba(102,126,234,0.3)] transition-transform duration-300 hover:scale-110 hover:rotate-3 hover:drop-shadow-[0_6px_20px_rgba(102,126,234,0.5)]"
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
       >

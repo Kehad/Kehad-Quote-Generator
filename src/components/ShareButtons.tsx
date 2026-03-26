@@ -1,5 +1,3 @@
-import "./ShareButtons.css";
-
 const ShareButtons = ({ quote, author, numColor }) => {
   const quoteText = `"${quote}" ~~ ${author}`;
   const encodedQuote = encodeURIComponent(quoteText);
@@ -38,9 +36,9 @@ const ShareButtons = ({ quote, author, numColor }) => {
   };
 
   return (
-    <div className="share-buttons">
+    <div className="flex flex-wrap justify-center gap-3 my-4">
       <button
-        className="share-btn facebook"
+        className="flex h-10 min-w-[42px] items-center justify-center rounded-lg px-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-2xl active:scale-95"
         onClick={shareToFacebook}
         style={shareStyle}
         title="Share on Facebook"
@@ -53,10 +51,9 @@ const ShareButtons = ({ quote, author, numColor }) => {
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
         </svg>
       </button>
-        {/* Facebook */}
 
       <button
-        className="share-btn linkedin"
+        className="flex h-10 min-w-[42px] items-center justify-center rounded-lg px-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-2xl active:scale-95"
         onClick={shareToLinkedIn}
         style={shareStyle}
         title="Share on LinkedIn"
@@ -72,7 +69,7 @@ const ShareButtons = ({ quote, author, numColor }) => {
       </button>
 
       <button
-        className="share-btn email"
+        className="flex h-10 min-w-[42px] items-center justify-center rounded-lg px-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-2xl active:scale-95"
         onClick={shareViaEmail}
         style={shareStyle}
         title="Share via Email"
@@ -88,7 +85,7 @@ const ShareButtons = ({ quote, author, numColor }) => {
       </button>
 
       <button
-        className="share-btn copy"
+        className="flex h-10 min-w-[42px] items-center justify-center rounded-lg px-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-2xl active:scale-95"
         onClick={copyToClipboard}
         style={shareStyle}
         title="Copy to Clipboard"

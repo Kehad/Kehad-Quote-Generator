@@ -1,6 +1,20 @@
-import "./Favorites.css";
+import type { FC } from "react";
 
-const Favorites = ({
+interface Quote {
+  quote: string;
+  author: string;
+  id?: number;
+  [key: string]: any;
+}
+
+interface FavoritesProps {
+  favorites: Quote[];
+  currentQuote: Quote | null;
+  onAddFavorite: (quote: Quote) => void;
+  onRemoveFavorite: (quote: Quote) => void;
+}
+
+const Favorites: React.FC<FavoritesProps> = ({
   favorites,
   currentQuote,
   onAddFavorite,
@@ -20,9 +34,13 @@ const Favorites = ({
   };
 
   return (
-    <div className="favorites-section">
+    <div className="flex justify-center my-2">
       <button
-        className={`favorite-btn ${isFavorited ? "favorited" : ""}`}
+        className={`flex items-center gap-3 px-7 py-2.5 text-sm font-bold uppercase tracking-wider transition-transform duration-300 ease-in-out rounded-full border-2 shadow-lg text-white bg-white/10 border-rose-500/50 hover:bg-rose-600/15 hover:border-rose-500 hover:scale-105 ${
+          isFavorited
+            ? "bg-gradient-to-r from-rose-500 via-rose-600 to-rose-700 border-white shadow-2xl scale-110"
+            : ""
+        }`}
         onClick={toggleFavorite}
         title={isFavorited ? "Remove from favorites" : "Add to favorites"}
       >
