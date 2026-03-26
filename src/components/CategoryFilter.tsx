@@ -1,4 +1,12 @@
-const CategoryFilter = ({ selectedCategory, onCategoryChange }) => {
+interface CategoryFilterProps {
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  selectedCategory,
+  onCategoryChange,
+}) => {
   const categories = [
     "All",
     "Inspirational",

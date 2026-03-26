@@ -1,4 +1,9 @@
-const Layout = (props) => {
+interface LayoutProps {
+  bkgColor: string;
+  children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = (props) => {
   const { bkgColor } = props;
   const layoutStyle = {
     backgroundColor: bkgColor,
@@ -6,7 +11,7 @@ const Layout = (props) => {
   };
   return (
     <div
-      className="hidden fixed inset-0 flex items-center justify-center flex-col"
+      className="fixed inset-0 flex items-center justify-center flex-col"
       style={layoutStyle}
     >
       {props.children}

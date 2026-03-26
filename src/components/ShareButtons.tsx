@@ -1,4 +1,14 @@
-const ShareButtons = ({ quote, author, numColor }) => {
+interface ShareButtonsProps {
+  quote: string;
+  author: string;
+  numColor: string;
+}
+
+const ShareButtons: React.FC<ShareButtonsProps> = ({
+  quote,
+  author,
+  numColor,
+}) => {
   const quoteText = `"${quote}" ~~ ${author}`;
   const encodedQuote = encodeURIComponent(quoteText);
 

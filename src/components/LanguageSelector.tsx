@@ -1,4 +1,12 @@
-const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
+interface LanguageSelectorProps {
+  selectedLanguage: string;
+  onLanguageChange: (language: string) => void;
+}
+
+const LanguageSelector: React.FC<LanguageSelectorProps> = ({
+  selectedLanguage,
+  onLanguageChange,
+}) => {
   const languages = [
     { code: "en", name: "English" },
     { code: "es", name: "Spanish" },

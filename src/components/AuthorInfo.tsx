@@ -1,4 +1,9 @@
-const AuthorInfo = ({ author, onAuthorClick }) => {
+interface AuthorInfoProps {
+  author: string;
+  onAuthorClick: (author: string) => void;
+}
+
+const AuthorInfo: React.FC<AuthorInfoProps> = ({ author, onAuthorClick }) => {
   return (
     <div className="text-center rounded-xl p-4 bg-white/10 backdrop-blur-sm">
       <p className="text-xs font-bold uppercase tracking-widest text-white/80">
