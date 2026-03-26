@@ -3,6 +3,12 @@ import Layout from "../layout/layout";
 // import AutoType from "./autoType";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "./spinner";
+import Logo from "./Logo";
+import CategoryFilter from "./CategoryFilter";
+import Favorites from "./Favorites";
+import ShareButtons from "./ShareButtons";
+import AuthorInfo from "./AuthorInfo";
+import LanguageSelector from "./LanguageSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./bodyMessage.css";
 
@@ -13,6 +19,12 @@ const BodyMessage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [copySuccess, setCopySuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const alertStyles = {
     position: "absolute",
@@ -101,6 +113,40 @@ const BodyMessage = () => {
     fetchQuote();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleAddFavorite = (quote) => {
+    setFavorites([...favorites, quote]);
+  };
+
+  const handleRemoveFavorite = (quote) => {
+    setFavorites(
+      favorites.filter(
+        (fav) => fav.quote !== quote.quote || fav.author !== quote.author,
+      ),
+    );
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    fetchQuote();
+  };
+
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
+    fetchQuote();
+  };
+
+  const handleAuthorClick = (author) => {
+    // Filter quotes by author
+    const authorQuotes = favorites.filter((q) => q.author === author);
+    if (authorQuotes.length > 0) {
+      setQuoteObject(authorQuotes[0]);
+    }
+  };
+
   const copyToClipboard = async () => {
     try {
       if (quoteObject) {
@@ -113,15 +159,21 @@ const BodyMessage = () => {
       }
       const copying = `"${quoteObject.quote}" ~~ ${quoteObject.author}`;
       await navigator.clipboard.writeText(copying);
-      //  setCopySuccess(true);
     } catch (err) {
-      //  setCopySuccess(false);
+      console.error("Failed to copy:", err);
     }
   };
 
   return (
     <>
       <Layout bkgColor={numColor} onClick={() => handleMouseLeave()}>
+        {/* Header with Logo and Title */}
+        <div className="app-header">
+          <Logo />
+          <h1 className="app-title">Quote Generator</h1>
+          <p className="app-subtitle">Discover inspiration daily</p>
+        </div>
+
         {errorState && (
           <Alert variant="danger" style={alertStyles} dismissible>
             You're unable to get a new quote! Check your internet connection and
@@ -140,36 +192,65 @@ const BodyMessage = () => {
           </Alert>
         )}
 
+        {/* Language Selector */}
+        <LanguageSelector
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
+        />
+
+        {/* Category Filter */}
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          onCategoryChange={handleCategoryChange}
+        />
+
+        {/* Favorites Button */}
+        <Favorites
+          favorites={favorites}
+          currentQuote={quoteObject}
+          onAddFavorite={handleAddFavorite}
+          onRemoveFavorite={handleRemoveFavorite}
+        />
+
         <div id="quote-box" className="header">
           {isLoading ? (
             <Spinner />
           ) : (
             <>
-              <div
-                className="copy-box"
-                title="Copy text"
+              <button
+                className="copy-btn"
+                title="Copy text to clipboard"
                 onClick={copyToClipboard}
+                aria-label="Copy quote"
               >
-                <a>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512"
-                    className="copy"
-                    fill={numColor}
-                  >
-                    <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z" />
-                  </svg>
-                </a>
-              </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 448 512"
+                  className="copy-icon"
+                  fill={numColor}
+                >
+                  <path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z" />
+                </svg>
+              </button>
               <p id="quote-text">
                 <span>"</span>
                 {quoteObject.quote}
               </p>
               {/* {error && alert('ddsuccdccd')} */}
-              <h3 id="author">~~ {quoteObject.author}</h3>
+              <AuthorInfo
+                author={quoteObject.author}
+                onAuthorClick={handleAuthorClick}
+              />
+
+              {/* Additional Share Buttons */}
+              <ShareButtons
+                quote={quoteObject.quote}
+                author={quoteObject.author}
+                numColor={numColor}
+              />
 
               <div id="author-remark">
-                <div id="author-link">
+                <div id="author-link" style={{ display: "none" }}>
                   <a
                     href={`https://twitter.com/intent/tweet?url=&text=${quoteObject.quote}`}
                     id="tweet-quote"
@@ -213,7 +294,6 @@ const BodyMessage = () => {
                 </div>
                 <button
                   id="new-quote"
-                  // style={newColor}
                   style={
                     isHovered ? { ...newColor, ...newColorHover } : newColor
                   }
@@ -221,12 +301,11 @@ const BodyMessage = () => {
                     fetchQuote();
                     handleButtonClick();
                   }}
-                  // onMouseEnter={handleMouseEnter}
-                  // onMouseLeave={handleMouseLeave}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
+                  title="Generate a new inspirational quote"
                 >
-                  New quote
+                  <span>New Quote</span>
                 </button>
                 {/* <button id="tweet-quote"></button>/ */}
               </div>
