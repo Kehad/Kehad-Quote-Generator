@@ -175,10 +175,30 @@ const BodyMessage: React.FC = () => {
         </section>
 
         {/* Main Quote Card */}
-        <section className="md:col-span-2 relative group overflow-hidden rounded-[2.5rem] bg-white/[0.03] border border-white/10 p-8 md:p-12 backdrop-blur-md shadow-2xl transition-all hover:border-white/20">
+        <section className="md:col-span-2 relative group overflow-hidden rounded-[2.5rem] bg-white/3 border border-white/10 p-8 md:p-12 backdrop-blur-md shadow-2xl transition-all hover:border-white/20">
           {isLoading ? (
             <div className="h-64 flex items-center justify-center">
               <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : errorState ? (
+            <div className="h-64 flex flex-col items-center justify-center text-center">
+              <p className="text-slate-400 mb-4">
+                Failed to load a quote. Check your connection and try again.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={fetchQuote}
+                  className="bg-white text-black font-bold px-4 py-2 rounded-2xl hover:bg-indigo-50 transition-all"
+                >
+                  Retry
+                </button>
+                <button
+                  onClick={() => setShowFavoritesModal(true)}
+                  className="px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs font-medium backdrop-blur-sm hover:bg-white/10"
+                >
+                  View Favorites
+                </button>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col h-full justify-between gap-8">
@@ -216,7 +236,7 @@ const BodyMessage: React.FC = () => {
 
         {/* Side Controls/Meta */}
         <aside className="space-y-4">
-          <div className="rounded-[2rem] bg-white/[0.03] border border-white/10 p-6 backdrop-blur-md">
+          <div className="rounded-4xl bg-white/3 border border-white/10 p-6 backdrop-blur-md">
             <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">
               Actions
             </h3>
@@ -266,7 +286,7 @@ const BodyMessage: React.FC = () => {
             </div>
           </div>
 
-          <div className="rounded-[2rem] bg-white/[0.03] border border-white/10 p-6 backdrop-blur-md">
+          <div className="rounded-4xl bg-white/3 border border-white/10 p-6 backdrop-blur-md">
             <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">
               Settings
             </h3>

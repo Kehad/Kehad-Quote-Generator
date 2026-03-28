@@ -1,10 +1,8 @@
-import type { FC } from "react";
-
 interface Quote {
   quote: string;
   author: string;
   id?: number;
-  [key: string]: any;
+  [key: string]: string | number | undefined;
 }
 
 interface FavoritesProps {
@@ -26,6 +24,7 @@ const Favorites: React.FC<FavoritesProps> = ({
   );
 
   const toggleFavorite = () => {
+    if (!currentQuote) return;
     if (isFavorited) {
       onRemoveFavorite(currentQuote);
     } else {
