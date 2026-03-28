@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FavoritesModal from "./FavoritesModal";
 import AutoType from "./autoType";
-import { FaTwitter, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaLinkedin, FaFacebook, FaInstagram, FaCopy, FaCheckCircle } from "react-icons/fa";
 
 interface Quote {
   quote: string;
@@ -248,14 +248,13 @@ const BodyMessage: React.FC = () => {
             </h3>
             <button
               onClick={copyToClipboard}
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+              className="w-full text-center flex items-center justify-center p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
             >
-              <span className="text-sm">
-                {copyStatus === "success" ? "Copied!" : "Copy to Clipboard"}
+              <span className="text-md text-center">
+                {copyStatus === "success" ?  <FaCheckCircle /> : <FaCopy />} 
+               
               </span>
-              <span className="opacity-40 group-hover:opacity-100 transition-opacity">
-                ↗
-              </span>
+             
             </button>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <button
