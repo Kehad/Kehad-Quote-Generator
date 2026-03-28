@@ -1,33 +1,43 @@
-import React from 'react';
-import Typed from 'typed.js';
+import React from "react";
+import Typed from "typed.js";
 
-function AutoType(props) {
-  // Create reference to store the DOM element containing the animation
-  const el = React.useRef(null);
-  console.log(props.name);
+type Props = {
+  text: string;
+  className?: string;
+};
+
+const AutoType: React.FC<Props> = ({ text, className }) => {
+  const el = React.useRef<HTMLSpanElement | null>(null);
+  const typedRef = React.useRef<InstanceType<typeof Typed> | null>(null);
+
   React.useEffect(() => {
-    const typed = new Typed(el.current, {
-      strings: [props.name],
-      typeSpeed: 100,
-      backSpeed: 100,
-      backDelay: 1000,
-      loop: true,
+    if (!el.current) return;
+
+    // destroy previous instance if any
+    if (typedRef.current) {
+      typedRef.current.destroy();
+      typedRef.current = null;
+    }
+
+    typedRef.current = new Typed(el.current, {
+      strings: [text || ""],
+      typeSpeed: 1,
+      showCursor: true,
+      cursorChar: "|",
+      backSpeed: 20,
+      backDelay: 1500,
+      loop: false,
     });
 
     return () => {
-      // Destroy Typed instance during cleanup to stop animation
-      typed.destroy();
+      if (typedRef.current) {
+        typedRef.current.destroy();
+        typedRef.current = null;
+      }
     };
-  }, [props]);
+  }, [text]);
 
-  return (
-    <span
-      style={{
-        color: '#07C51A',
-      }}
-      ref={el}
-    />
-  );
-}
+  return <span ref={el} className={className} />;
+};
 
 export default AutoType;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FavoritesModal from "./FavoritesModal";
+import AutoType from "./autoType";
 import { FaTwitter, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 
 interface Quote {
@@ -207,7 +208,12 @@ const BodyMessage: React.FC = () => {
                   “
                 </span>
                 <p className="text-2xl md:text-4xl font-medium leading-tight tracking-tight text-slate-50">
-                  {quoteObject?.quote}
+                  {quoteObject?.quote ? (
+                    <AutoType
+                      text={quoteObject.quote}
+                      className="text-2xl md:text-4xl font-medium leading-tight tracking-tight text-slate-50"
+                    />
+                  ) : null}
                 </p>
                 <p className="text-lg text-slate-400 font-light">
                   — {quoteObject?.author}
